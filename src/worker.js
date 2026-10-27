@@ -1,8 +1,8 @@
 // ========== 配置区域 ==========
 const KV_BINDING_NAME = "NOTE-KV";  // 改成你在 Cloudflare 绑定 KV 时填写的 Variable name
-const ADMIN_USER = "zhl2010";
-const ADMIN_PASS = "123456";
-const ADMIN_TOKEN = "439822291db8372e36efe1274c701f3db485662c";
+const ADMIN_USER = "lizesheng520";
+const ADMIN_PASS = "mpll753210Lzs20111222FuckHacker!250";
+const ADMIN_TOKEN = "zxcvbnm1234567890wanderingwitch";
 // ==============================
 
 export default {
@@ -149,7 +149,7 @@ function getLoginPage() {
 </head>
 <body>
 <div class="login-card">
-    <h1>📋 验证码管理后台</h1>
+    <h1>验证码管理后台</h1>
     <div class="sub">请输入您的账号和密码</div>
     <form id="loginForm">
         <input type="text" name="username" placeholder="用户名" autocomplete="off" required>
@@ -255,13 +255,13 @@ function getAdminPage() {
     <div class="header">
         <h1>📨 短信验证码看板 <span class="ver-badge">管理版</span></h1>
         <div style="display:flex; gap:12px; align-items:center;">
-            <button class="theme-btn" id="themeBtn">🌙 暗色</button>
-            <button class="logout-btn" id="logoutBtn">🚪 退出登录</button>
+            <button class="theme-btn" id="themeBtn">暗色</button>
+            <button class="logout-btn" id="logoutBtn">退出登录</button>
         </div>
     </div>
     <div class="stats-bar">
-        <div class="stat-item"><span class="stat-label">📊 总记录数</span><span class="stat-number" id="totalCount">0</span></div>
-        <div class="stat-item"><span class="stat-label">🕐 最后更新</span><span class="stat-number" id="lastUpdate" style="font-size: 16px;">--:--:--</span></div>
+        <div class="stat-item"><span class="stat-label">总记录数</span><span class="stat-number" id="totalCount">0</span></div>
+        <div class="stat-item"><span class="stat-label">最后更新</span><span class="stat-number" id="lastUpdate" style="font-size: 16px;">--:--:--</span></div>
         <button class="refresh-btn" id="refreshBtn">🔄 刷新数据</button>
     </div>
     <div class="card">
@@ -269,8 +269,8 @@ function getAdminPage() {
             <table>
                 <thead>
                     <tr>
-                        <th style="min-width:260px;">🔢 验证码内容</th>
-                        <th style="min-width:150px;">⏰ 接收时间 (北京时间)</th>
+                        <th style="min-width:260px;">验证码内容</th>
+                        <th style="min-width:150px;">接收时间</th>
                         <th style="width:90px">操作</th>
                     </tr>
                 </thead>
@@ -294,13 +294,13 @@ function getAdminPage() {
     function totalPages() { return Math.max(1, Math.ceil(totalRecords / PAGE_SIZE)); }
     function render() {
         const tbody = document.getElementById('tableBody');
-        if (pageItems.length === 0) { tbody.innerHTML = '<tr><td colspan="3" class="empty-state">✨ 暂无验证码，等待接收...</td></tr>'; }
+        if (pageItems.length === 0) { tbody.innerHTML = '<tr><td colspan="3" class="empty-state">暂无验证码，等待接收...</td></tr>'; }
         else {
             tbody.innerHTML = pageItems.map((item) => \`
                 <tr>
                     <td><span class="code-badge">\${escapeHtml(item.code)}</span></td>
                     <td class="time-cell">\${escapeHtml(item.time)}</td>
-                    <td><button class="delete-btn" data-id="\${escapeHtml(item.id)}" title="删除">🗑️</button></td>
+                    <td><button class="delete-btn" data-id="\${escapeHtml(item.id)}" title="删除">🗑</button></td>
                 </tr>\`).join('');
             document.querySelectorAll('.delete-btn').forEach(btn => { btn.addEventListener('click', () => { if (confirm('确定要删除这条记录吗？')) deleteRecord(btn.getAttribute('data-id')); }); });
         }
@@ -333,7 +333,7 @@ function getAdminPage() {
     function handleJump() { let p = parseInt(document.getElementById('jumpPage').value, 10); if (isNaN(p)) p = 1; p = Math.max(1, Math.min(totalPages(), p)); setJumpInput(); loadData(p); }
     async function loadData(page) {
         const tbody = document.getElementById('tableBody');
-        tbody.innerHTML = '<tr><td colspan="3" class="loading">⌛ 加载中...</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="3" class="loading">加载中...</td></tr>';
         const target = Math.max(1, parseInt(page, 10) || 1);
         try {
             const resp = await fetch('/code/?page=' + target + '&size=' + PAGE_SIZE);
@@ -346,7 +346,7 @@ function getAdminPage() {
             const now = new Date(); const bj = new Date(now.getTime() + 8 * 60 * 60 * 1000);
             document.getElementById('lastUpdate').textContent = bj.toISOString().replace('T', ' ').slice(0, 19);
             setJumpInput(); render();
-        } catch (err) { console.error(err); tbody.innerHTML = '<tr><td colspan="3" class="empty-state">❌ 加载失败，请检查网络</td></tr>'; }
+        } catch (err) { console.error(err); tbody.innerHTML = '<tr><td colspan="3" class="empty-state">加载失败，请检查网络</td></tr>'; }
     }
     async function deleteRecord(id) {
         try {
@@ -359,7 +359,7 @@ function getAdminPage() {
     document.getElementById('jumpGo').addEventListener('click', handleJump);
     document.getElementById('jumpPage').addEventListener('keydown', (e) => { if (e.key === 'Enter') handleJump(); });
     function initTheme() { let saved = localStorage.getItem('theme'); if (!saved) saved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; applyTheme(saved); }
-    function applyTheme(t) { document.body.classList.toggle('dark', t === 'dark'); document.getElementById('themeBtn').textContent = t === 'dark' ? '☀️ 亮色' : '🌙 暗色'; localStorage.setItem('theme', t); }
+    function applyTheme(t) { document.body.classList.toggle('dark', t === 'dark'); document.getElementById('themeBtn').textContent = t === 'dark' ? '亮色' : '暗色'; localStorage.setItem('theme', t); }
     document.getElementById('themeBtn').addEventListener('click', () => { const cur = document.body.classList.contains('dark') ? 'dark' : 'light'; applyTheme(cur === 'dark' ? 'light' : 'dark'); });
     loadData(1);
     setInterval(() => loadData(currentPage), 30000);
